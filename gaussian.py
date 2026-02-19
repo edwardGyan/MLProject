@@ -95,7 +95,7 @@ def run_experiment(X, y, runs=10):
         history = model.fit(
             X_train, y_train,
             validation_data=(X_val, y_val),
-            epochs=100,
+            epochs=3,
             verbose=1,
             callbacks=[early_stop]
         )
@@ -254,7 +254,7 @@ def visualize_dataset(path):
     history = model.fit(
         X_train_scaled, y_train,
         validation_data=(X_val_scaled, y_val),
-        epochs=500,
+        epochs=3,
         verbose=1,
         callbacks=[early_stop]
     )
@@ -273,18 +273,25 @@ def visualize_dataset(path):
 
 
 #RUNNING THE WHOLE EXPERIMENT. 
-#FOR NOW WE NEED TO CHANGE THE PATH MANUALLY TO SEE THE OTHER DATASETS, WE WILL PROLLY NEED  A LOOP TO AUTOMATE THINGS. 
+#Made a Loop to go through all the 2D datasets! 
+#Press Enter or type 'Next' to continue to the next dataset once the first has been done. 
 if __name__ == "__main__":
 
-    path = "Gaussian 2D Wide.csv"
+    paths = ["Moons 2D Narrow.csv", "Moons 2D Wide.csv", "Moons 2D Overlap", 
+    "Gaussian 2D Narrow.csv", 
+    "Gaussian 2D Wide.csv", "Gaussian 2D Overlap.csv"]
 
-    X, y = load_gaussian_2d(path)
+    for path in paths:
 
-    results = run_experiment(X, y)
+        X, y = load_gaussian_2d(path)
 
-    summarize_results(results)
+        results = run_experiment(X, y)
 
-    visualize_dataset(path)
+        summarize_results(results)
+
+        visualize_dataset(path)
+
+        input(f"Processed {path}. Press Enter (or type 'Next') to continue to the next dataset...")
 
 
 
